@@ -1,0 +1,8 @@
+# objects
+
+*.o
+
+# binaries and isos
+
+*.bin
+*.iso
