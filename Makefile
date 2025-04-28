@@ -10,4 +10,4 @@ clean:
 	@$(MAKE) -C src/kernel clean
 
 format:
-	find src/kernel/ -type f \( -name "*.c" -o -name "*.h" \) | xargs clang-format -style="{BasedOnStyle: Microsoft, IndentWidth: 8, PointerAlignment: Left, AlignConsecutiveAssignments: true, AlignConsecutiveDeclarations: true, UseTab: Always, TabWidth: 8, AlignAfterOpenBracket: true}" -i
+	find src/kernel/ -type f \( -name "*.c" -o -name "*.h" \) | xargs clang-format -style="{BasedOnStyle: Microsoft, IndentWidth: 8, PointerAlignment: Left, AlignConsecutiveAssignments: true, AlignConsecutiveDeclarations: true, AlignConsecutiveMacros: true, UseTab: Always, TabWidth: 8, AlignAfterOpenBracket: true}" -i
