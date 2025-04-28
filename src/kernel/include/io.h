@@ -3,7 +3,7 @@
 
 #include "system.h"
 
-extern uint8_t inportb(unsigned short _port);
-extern void    outportb(unsigned short _port, unsigned char _data);
+extern uint8_t inportb(uint16_t _port);
+extern void    outportb(uint16_t _port, uint8_t _data);
 
 #endif
