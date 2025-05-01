@@ -1,6 +1,6 @@
-#include <vga.h>
-#include <string.h>
 #include <io.h>
+#include <string.h>
+#include <vga.h>
 
 uint16_t* textmemptr;
 size_t	  attrib = 0x0F;
