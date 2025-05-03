@@ -76,7 +76,7 @@ void cls()
 }
 
 /* Puts a single character on the screen */
-void putch(uint8_t c)
+void putc(uint8_t c)
 {
 	uint16_t* where;
 	uint16_t  att = attrib << 8;
@@ -138,7 +138,33 @@ void puts(uint8_t* text)
 
 	for (i = 0; i < strlen(text); i++)
 	{
-		putch(text[i]);
+		putc(text[i]);
+	}
+}
+
+void puti(int32_t num)
+{
+	if (num < 0)
+	{
+		putc('-');
+		num = -num;
+	}
+
+	size_t	num_digits = 1;
+	int32_t temp	   = num;
+
+	while (temp >= 10)
+	{
+		temp /= 10;
+		num_digits++;
+	}
+
+	for (size_t i = num_digits; i > 0; i--)
+	{
+		int32_t divisor = pow(10, i - 1);
+		int32_t digit	= num / divisor;
+		putc((uint8_t)(digit + '0'));
+		num %= divisor;
 	}
 }
 

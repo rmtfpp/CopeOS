@@ -6,6 +6,10 @@
 global start
 start:
     mov esp, _sys_stack     ; This points the stack to our new stack area
+    push 165251
+    push 326726
+    push 895321
+    ; whatever i put on top of the stack can be used as param on the next called function
     jmp stublet
 
 ; This part MUST be 4byte aligned, so we solve that issue using 'ALIGN 4'
