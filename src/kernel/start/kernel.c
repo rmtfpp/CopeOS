@@ -8,13 +8,13 @@
  *  infinite loop. This will be like our 'idle' loop */
 void kernel(uint32_t flags, uint32_t mem_lower, uint32_t mem_upper)
 {
-	bootinfo_t bootinfo = {flags, mem_lower, mem_upper};
+	// multiboot parameters initialization
+	bootinfo_t multiboot_params = {flags, mem_lower, mem_upper};
+	
 	// VGA init and screen test
-	uint8_t* literal = (uint8_t*)"Hello, kernel world!\n";
 	init_video();
+	bootinfo_stats(&multiboot_params);
 
-	bootinfo_stats(&bootinfo);
-	puti(-1234);
 	/* ...and leave this loop in. There is an endless loop in
 	 *  'start.asm' also, if you accidentally delete this next line */
 	for (;;)
