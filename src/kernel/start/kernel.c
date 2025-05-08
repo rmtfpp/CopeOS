@@ -6,15 +6,24 @@
 
 /* This is a very simple main() function. All it does is sit in an
  *  infinite loop. This will be like our 'idle' loop */
-void kernel(uint32_t flags, uint32_t mem_lower, uint32_t mem_upper)
-{
-	// multiboot parameters initialization
-	bootinfo_t multiboot_params = {flags, mem_lower, mem_upper};
-	
+void kernel(uint32_t multiboot_magic, bootinfo_t* bootinfo)
+{	
 	// VGA init and screen test
 	init_video();
-	bootinfo_stats(&multiboot_params);
 
+	if(bootinfo->flags & (1 << 9))
+	{
+		uint8_t* name = (uint8_t*)(uintptr_t)(bootinfo->boot_loader_name);
+		puts((uint8_t*)"Booting with ");
+		puts(name);
+		puts((uint8_t*) "\n");
+	}	
+
+	bootinfo_stats(bootinfo);
+	puti(multiboot_magic);
+	puts((uint8_t*)"\n");
+
+		
 	/* ...and leave this loop in. There is an endless loop in
 	 *  'start.asm' also, if you accidentally delete this next line */
 	for (;;)
