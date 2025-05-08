@@ -7,18 +7,18 @@
 
 typedef struct __attribute__((packed))
 {
-  uint32_t tabsize;
-  uint32_t strsize;
-  uint32_t addr;
-  uint32_t reserved;
+	uint32_t tabsize;
+	uint32_t strsize;
+	uint32_t addr;
+	uint32_t reserved;
 } multiboot_aout_symbol_table_t;
 
 typedef struct __attribute__((packed))
 {
-  uint32_t num;
-  uint32_t size;
-  uint32_t addr;
-  uint32_t shndx;
+	uint32_t num;
+	uint32_t size;
+	uint32_t addr;
+	uint32_t shndx;
 } multiboot_elf_section_header_table_t;
 
 typedef struct __attribute__((packed))
@@ -32,9 +32,8 @@ typedef struct __attribute__((packed))
 	uint32_t mods_count;
 	uint32_t mods_addr;
 
-	union
-	{
-		multiboot_aout_symbol_table_t aout_sym;
+	union {
+		multiboot_aout_symbol_table_t	     aout_sym;
 		multiboot_elf_section_header_table_t elf_sec;
 	} syms;
 
