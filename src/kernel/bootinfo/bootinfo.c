@@ -2,15 +2,15 @@
 
 void bootinfo_stats(bootinfo_t* bootinfo)
 {
-	puts("flags: ");
+	puts((uint8_t*)"flags: ");
 	puti(bootinfo->flags);
 	puts((uint8_t*)"\n");
 
-	puts("mem_lower: ");
+	puts((uint8_t*)"mem_lower: ");
 	puti(bootinfo->mem_lower);
 	puts((uint8_t*)"\n");
 
-	puts("mem_upper: ");
+	puts((uint8_t*)"mem_upper: ");
 	puti(bootinfo->mem_upper);
 	puts((uint8_t*)"\n");
 }

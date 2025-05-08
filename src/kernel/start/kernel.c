@@ -26,10 +26,9 @@ void kernel(uint32_t multiboot_magic, bootinfo_t* bootinfo)
 	/* ...and leave this loop in. There is an endless loop in
 	 *  'start.asm' also, if you accidentally delete this next line */
 	for (;;)
-}
-{
-	__asm__ __volatile__("hlt");
-}
+	{
+		__asm__ __volatile__("hlt");
+	}
 }
 
 // it is using 100% cpu wtf...
