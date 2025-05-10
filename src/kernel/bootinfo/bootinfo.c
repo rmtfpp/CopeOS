@@ -1,16 +1,16 @@
-#include <bootinfo.h>
+#include <multiboot.h>
 
-void bootinfo_stats(bootinfo_t* bootinfo)
+void bootinfo_stats(multiboot_info_t* bootinfo)
 {
 	puts((uint8_t*)"flags: ");
 	puti(bootinfo->flags);
 	puts((uint8_t*)"\n");
 
-	puts((uint8_t*)"mem_lower: ");
-	puti(bootinfo->mem_lower);
+	puts((uint8_t*)"mmap_length: ");
+	puti(bootinfo->mmap_length);
 	puts((uint8_t*)"\n");
 
-	puts((uint8_t*)"mem_upper: ");
-	puti(bootinfo->mem_upper);
+	puts((uint8_t*)"mmap_addr: ");
+	puti(bootinfo->mmap_addr);
 	puts((uint8_t*)"\n");
 }

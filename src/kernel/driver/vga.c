@@ -168,6 +168,23 @@ void puti(int32_t num)
 	}
 }
 
+void putx(uint32_t num)
+{
+	int started = 0; // Used to skip leading zeros
+	for (int i = 28; i >= 0; i -= 4)
+	{
+		uint8_t nibble = (num >> i) & 0xF;
+		if (nibble != 0 || started || i == 0)
+		{
+			started = 1;
+			if (nibble < 10)
+				putc('0' + nibble);
+			else
+				putc('A' + (nibble - 10));
+		}
+	}
+}
+
 /* Sets the forecolor and backcolor that we will use */
 void settextcolor(uint8_t forecolor, uint8_t backcolor)
 {
