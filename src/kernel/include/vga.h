@@ -14,5 +14,6 @@ extern void settextcolor(uint8_t forecolor, uint8_t backcolor);
 extern void init_video(void);
 extern void puti(int32_t num);
 extern void putx(uint32_t num);
+extern void kprintf(const char* format, ...);
 
 #endif

@@ -11,10 +11,9 @@ void kernel(uint32_t magic, multiboot_info_t* mbd)
 	// VGA init and screen test
 	init_video();
 
-	
 	if (!(mbd->flags >> 6 & 0x1))
 	{
-		puts("invalid memory map given by GRUB bootloader");
+		kprintf("invalid memory map given by GRUB bootloader");
 	}
 
 	/* Loop through the memory map and display the values */
@@ -22,25 +21,8 @@ void kernel(uint32_t magic, multiboot_info_t* mbd)
 	for (i = 0; i < mbd->mmap_length; i += sizeof(multiboot_memory_map_t))
 	{
 		multiboot_memory_map_t* mmmt = (multiboot_memory_map_t*)(mbd->mmap_addr + i);
-		
-		puti(i);
-		puts((uint8_t*) " | ");
 
-		puts("Start Addr: ");
-		putx(mmmt->addr);
-
-
-		puts(" | Length: ");
-		putx(mmmt->len);
-
-		puts(" | Size: ");
-		puti(mmmt->size);
-
-
-		puts(" | Type: ");
-		puti(mmmt->type);
-		puts((uint8_t*)"\n");
-
+		kprintf("%d\taddr: %x\tlen: %x\tsize: %d\ttype: %d\n", i, mmmt->addr, mmmt->len, mmmt->size, mmmt->type);
 
 		if (mmmt->type == MULTIBOOT_MEMORY_AVAILABLE)
 		{
@@ -61,7 +43,6 @@ void kernel(uint32_t magic, multiboot_info_t* mbd)
 	{
 		puts(mbd->boot_loader_name);
 	}
-
 
 	/* ...and leave this loop in. There is an endless loop in
 	 *  'start.asm' also, if you accidentally delete this next line */

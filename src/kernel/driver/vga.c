@@ -193,6 +193,90 @@ void settextcolor(uint8_t forecolor, uint8_t backcolor)
 	attrib = (backcolor << 4) | (forecolor & 0x0F);
 }
 
+void kprintf(const char* format_str, ...)
+{
+	uint8_t* format = (uint8_t*) format_str;
+	uint8_t buffer[256];
+	size_t	buffer_pos = 0;
+
+	// parsing extra arguments that are on the stack
+	// address of first argument after format
+	void** args_ptr;
+	__asm__ __volatile__("leal 8(%%ebp), %0" : "=r"(args_ptr));
+
+	args_ptr++;
+
+	for (size_t i = 0; format[i] != '\0'; i++)
+	{
+		if (format[i] == '%' && format[i + 1] != '\0')
+		{
+			// charachters before printing
+			if (buffer_pos > 0)
+			{
+				buffer[buffer_pos] = '\0';
+				puts(buffer);
+				buffer_pos = 0;
+			}
+
+			// format specifier handler
+			switch (format[++i])
+			{
+			case 's': {
+				uint8_t* str = (uint8_t*)*args_ptr++;
+				puts(str);
+				break;
+			}
+			case 'd': {
+				size_t value = (size_t)*args_ptr++;
+				puti(value);
+				break;
+			}
+			case 'x': {
+				size_t value = (size_t)*args_ptr++;
+				putx(value);
+				break;
+			}
+			case 'c': {
+				// char promoted to int for calling conventions
+				char c = (uint8_t)(size_t)*args_ptr++;
+				putc(c);
+				break;
+			}
+			case '%': {
+				putc('%');
+				break;
+			}
+			default: {
+				// in case format spec is not s d x c
+				putc('%');
+				putc(format[i]);
+				break;
+			}
+			}
+		}
+		else
+		{
+			// put current char into the buffer
+			buffer[buffer_pos++] = format[i];
+
+			// clear the buffer
+			if (buffer_pos >= 255)
+			{
+				buffer[buffer_pos] = '\0';
+				puts(buffer);
+				buffer_pos = 0;
+			}
+		}
+	}
+
+	// Output any remaining characters in the buffer
+	if (buffer_pos > 0)
+	{
+		buffer[buffer_pos] = '\0';
+		puts(buffer);
+	}
+}
+
 /* Sets our text-mode VGA pointer, then clears the screen for us */
 void init_video(void)
 {
