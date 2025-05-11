@@ -2,15 +2,6 @@
 
 void bootinfo_stats(multiboot_info_t* bootinfo)
 {
-	puts((uint8_t*)"flags: ");
-	puti(bootinfo->flags);
-	puts((uint8_t*)"\n");
-
-	puts((uint8_t*)"mmap_length: ");
-	puti(bootinfo->mmap_length);
-	puts((uint8_t*)"\n");
-
-	puts((uint8_t*)"mmap_addr: ");
-	puti(bootinfo->mmap_addr);
-	puts((uint8_t*)"\n");
+	kprintf("flags: %d\tmmap_length: %d\tmmap_addr: %d\n", bootinfo->flags, bootinfo->mmap_length,
+		bootinfo->mmap_addr);
 }

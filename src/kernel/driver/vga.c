@@ -1,4 +1,4 @@
-#include <io.h>
+#include <stdio.h>
 #include <string.h>
 #include <vga.h>
 
@@ -185,6 +185,23 @@ void putx(uint32_t num)
 	}
 }
 
+void putX(uint64_t num)
+{
+	int started = 0; // Used to skip leading zeros
+	for (int i = 60; i >= 0; i -= 4)
+	{
+		uint8_t nibble = (num >> i) & 0xF;
+		if (nibble != 0 || started || i == 0)
+		{
+			started = 1;
+			if (nibble < 10)
+				putc('0' + nibble);
+			else
+				putc('A' + (nibble - 10));
+		}
+	}
+}
+
 /* Sets the forecolor and backcolor that we will use */
 void settextcolor(uint8_t forecolor, uint8_t backcolor)
 {
@@ -195,9 +212,9 @@ void settextcolor(uint8_t forecolor, uint8_t backcolor)
 
 void kprintf(const char* format_str, ...)
 {
-	uint8_t* format = (uint8_t*) format_str;
-	uint8_t buffer[256];
-	size_t	buffer_pos = 0;
+	uint8_t* format = (uint8_t*)format_str;
+	uint8_t	 buffer[256];
+	size_t	 buffer_pos = 0;
 
 	// parsing extra arguments that are on the stack
 	// address of first argument after format
@@ -227,13 +244,20 @@ void kprintf(const char* format_str, ...)
 				break;
 			}
 			case 'd': {
-				size_t value = (size_t)*args_ptr++;
+				uint32_t value = (uint32_t)*args_ptr++;
 				puti(value);
 				break;
 			}
 			case 'x': {
-				size_t value = (size_t)*args_ptr++;
+				uint32_t value = (uint32_t)*args_ptr++;
 				putx(value);
+				break;
+			}
+			case 'X': {
+				uint32_t low_value  = (uint32_t)*args_ptr++;
+				uint32_t high_value = (uint32_t)*args_ptr++;
+				uint64_t value	    = ((uint64_t)high_value << 32) | low_value;
+				putX(value);
 				break;
 			}
 			case 'c': {

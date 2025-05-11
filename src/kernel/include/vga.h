@@ -1,8 +1,8 @@
 #ifndef __VGA_H
 #define __VGA_H
 
-#include "math.h"
-#include "system.h"
+#include <cdefs.h>
+#include <math.h>
 
 #define VGA_MAX_ROWS	25
 #define VGA_MAX_COLUMNS 80

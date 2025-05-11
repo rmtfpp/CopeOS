@@ -18,11 +18,12 @@ void kernel(uint32_t magic, multiboot_info_t* mbd)
 
 	/* Loop through the memory map and display the values */
 	size_t i;
-	for (i = 0; i < mbd->mmap_length; i += sizeof(multiboot_memory_map_t))
+	for (i = 0; i < mbd->mmap_length;)
 	{
 		multiboot_memory_map_t* mmmt = (multiboot_memory_map_t*)(mbd->mmap_addr + i);
 
-		kprintf("%d\taddr: %x\tlen: %x\tsize: %d\ttype: %d\n", i, mmmt->addr, mmmt->len, mmmt->size, mmmt->type);
+		kprintf("Start Addr: %X | Length: %X | Size: %x | Type: %d\n", mmmt->addr, mmmt->len, mmmt->size,
+			mmmt->type);
 
 		if (mmmt->type == MULTIBOOT_MEMORY_AVAILABLE)
 		{
@@ -33,15 +34,15 @@ void kernel(uint32_t magic, multiboot_info_t* mbd)
 			 * into account before writing to memory!
 			 */
 		}
+
+		i += mmmt->size + sizeof(mmmt->size);
 	}
 
 	bootinfo_stats(mbd);
-	puti(magic);
-	puts((uint8_t*)"\n");
 
 	if (mbd->flags & (1 << 9))
 	{
-		puts(mbd->boot_loader_name);
+		kprintf("Booting with %s\tMAGIC: %x", mbd->boot_loader_name, magic);
 	}
 
 	/* ...and leave this loop in. There is an endless loop in

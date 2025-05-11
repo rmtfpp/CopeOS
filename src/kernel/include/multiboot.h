@@ -22,8 +22,8 @@
 #ifndef __MULTIBOOT_H
 #define __MULTIBOOT_H
 
-#include "system.h"
-#include "vga.h"
+#include <cdefs.h>
+#include <vga.h>
 
 /* How many bytes from the start of the file we search for the header. */
 #define MULTIBOOT_SEARCH       8192

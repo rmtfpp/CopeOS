@@ -4,7 +4,7 @@ COMPILER = i686-elf-gcc
 ASSEMBLER = nasm
 LINKER = i686-elf-ld
 
-CFLAGS = -c -std=gnu99 -ffreestanding -O2 -Wall -Wextra -I./include/ -nostdlib
+CFLAGS = -c -std=gnu99 -ffreestanding -O2 -Wall -Wextra -I./include/ -I../libc/include/ -nostdlib
 SFLAGS = -felf32
 LDFLAGS = -nostdlib
 
@@ -20,6 +20,8 @@ S_SOURCES := $(shell find . -name '*.s')
 C_OBJS := $(C_SOURCES:.c=.o)
 S_OBJS := $(S_SOURCES:.s=.o)
 
+LIBC_OBJS := $(shell find ../libc -name '*.o')
+
 %.o: %.c
 	$(COMPILER) $(CFLAGS) $< -o $@
 
@@ -28,7 +30,7 @@ S_OBJS := $(S_SOURCES:.s=.o)
 
 $(BINARY): $(LINKFILE) $(C_OBJS) $(S_OBJS)
 	mkdir -p $(TARGET)/boot/
-	$(LINKER) -T $(LINKFILE) -o $(BINARY) $(C_OBJS) $(S_OBJS)
+	$(LINKER) -T $(LINKFILE) -o $(BINARY) $(C_OBJS) $(S_OBJS) $(LIBC_OBJS)
 
 build-bin: $(BINARY)
 	@echo "BINARY FILE BUILT"

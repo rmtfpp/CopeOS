@@ -1,8 +1,8 @@
-#ifndef __SYSTEM_H
-#define __SYSTEM_H
+#ifndef __CDEFS_H
+#define __CDEFS_H
 
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
 
-#endif
+#endif 
