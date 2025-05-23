@@ -15,6 +15,9 @@ SECTIONS
     *(.data)
     . = ALIGN(4096);
   }
+  .rodata ALIGN (0x1000) : {
+        *(.rodata)
+  }
   .bss : AT(phys + (bss - code))
   {
     bss = .;

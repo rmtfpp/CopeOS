@@ -10,6 +10,7 @@ void kernel(uint32_t magic, multiboot_info_t* mbd)
 {
 	// VGA init and screen test
 	init_video();
+ciao mi chiamo filippo e
 
 	if (!(mbd->flags >> 6 & 0x1))
 	{

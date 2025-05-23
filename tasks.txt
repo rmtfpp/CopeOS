@@ -1,0 +1,3 @@
+[] memory management (malloc, free... with paging)
+	[] read osdev https://wiki.osdev.org/Memory_management
+	[] implement free and malloc
